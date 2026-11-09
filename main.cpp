@@ -1,0 +1,40 @@
+#include <iostream>
+
+int main (){
+
+
+    //Image Parameters
+    int image_width = 256;
+    int image_height = 256;
+
+    // Render Image
+    // We want the image to be in PPM format
+
+    // PPM Header:
+    // P3 means colors are in ASCII (PPM Format Declaration), followed by image_width columns and image_height rows and then 255 for max color (See PPM format: https://en.wikipedia.org/wiki/Netpbm)
+    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+
+
+    // The PPM format/declaration must be followed by RGB triplets which per pixel. Each pixel has three RGB values
+    // Iterate through each pixel and define each pixels R, G and B
+    // For this image we'll run a gradient based on the pixel position
+    for (int j = 0; j < image_height; j++){
+        for(int i = 0; i < image_width; i++){
+        // First we are getting the RGB factors (0.0-1.0)
+            auto r = double(i)/(image_width-1);
+            auto g = double(j)/(image_height-1);
+            auto b = 0.0;
+
+            // Now we must scale the factors to integer RGB values (0-255)
+            auto ir = int(255.999 * r);
+            auto ig = int(255.999 * g);
+            auto ib = int(255.999 * b);
+
+            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+        }
+    }
+
+}
+
+//g++ main.cpp -o inOneWeekend -> to Compile
+//cmd /c "inOneWeekend.exe > image.ppm" -> To generate ppm
