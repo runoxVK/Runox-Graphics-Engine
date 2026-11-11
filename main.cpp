@@ -1,5 +1,7 @@
 #include <iostream>
 
+//https://raytracing.github.io/ <- Book being followed
+
 int main (){
 
 
@@ -20,7 +22,11 @@ int main (){
     // For this image we'll run a gradient based on the pixel position
     for (int j = 0; j < image_height; j++){
         for(int i = 0; i < image_width; i++){
-        // First we are getting the RGB factors (0.0-1.0)
+
+            // Progress Indicator (clog = output stream for logging messages, flush = ensures output is displayed immediately) -> Clog and flush combo is useful for message logging
+            std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+
+            // First we are getting the RGB factors (0.0-1.0)
             auto r = double(i)/(image_width-1);
             auto g = double(j)/(image_height-1);
             auto b = 0.0;
@@ -33,6 +39,8 @@ int main (){
             std::cout << ir << ' ' << ig << ' ' << ib << '\n';
         }
     }
+
+    std::clog << "\rDone";
 
 }
 
