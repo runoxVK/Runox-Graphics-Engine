@@ -1,4 +1,8 @@
+#include <algorithm>
 #include <iostream>
+#include "vec3.h"
+#include "color.h"
+
 
 //https://raytracing.github.io/ <- Book being followed
 
@@ -26,21 +30,16 @@ int main (){
             // Progress Indicator (clog = output stream for logging messages, flush = ensures output is displayed immediately) -> Clog and flush combo is useful for message logging
             std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
 
-            // First we are getting the RGB factors (0.0-1.0)
-            auto r = double(i)/(image_width-1);
-            auto g = double(j)/(image_height-1);
-            auto b = 0.0;
+            // Defining the pixel color vector
+            auto pixel_color = color(double(i)/(image_width-1), double(j)/(image_height-1), 0);
+            write_color(std::cout, pixel_color);
 
-            // Now we must scale the factors to integer RGB values (0-255)
-            auto ir = int(255.999 * r);
-            auto ig = int(255.999 * g);
-            auto ib = int(255.999 * b);
-
-            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
         }
     }
 
-    std::clog << "\rDone";
+    std::sort(const RanIt First, const RanIt Last)
+
+    std::clog << "\rDone.                       \n";
 
 }
 
