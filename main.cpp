@@ -6,8 +6,15 @@
 #include <iostream>
 //https://raytracing.github.io/ <- Book being followed
 
-color ray_color(const ray&){
-    return color(0,0,0);
+// Gradient of white-->blue depending on y (see document for derivation)
+color ray_color(const ray& r){
+    vec3 unit_direction = unit_vector(r.direction());
+
+    //a as a function of y where 0<a<1 (white < a < blue)
+    auto a = 0.5*(unit_direction.y()+1);
+
+    // Lerp Formula
+    return ((1-a)*color(1,1,1) + a*color(0.5,0.7,1.0));
 }
 
 
