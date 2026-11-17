@@ -6,8 +6,21 @@
 #include <iostream>
 //https://raytracing.github.io/ <- Book being followed
 
+bool hit_sphere(const point3& center, double radius, const ray& r){
+    auto a = dot(r.direction(), r.direction());
+    vec3 oc = (center - r.origin());
+    auto b = -2.0*dot((r.direction()), oc);
+    auto c = dot(oc, oc)- radius*radius;
+    auto disc = b*b - 4*a*c;
+    return (disc >= 0);
+
+}
 // Gradient of white-->blue depending on y (see document for derivation)
 color ray_color(const ray& r){
+    if(hit_sphere(point3(0,0,-1), 0.5, r)){
+        return color(1,0,0);
+    }
+
     vec3 unit_direction = unit_vector(r.direction());
 
     //a as a function of y where 0<a<1 (white < a < blue)
@@ -32,7 +45,7 @@ int main (){
 
     // Viewport
     auto viewport_height = 2.0;
-    auto viewport_width = viewport_height * (double(image_width/image_height)); // Same idea as height * aspect ratio to get width but we are using actual fraction cus the aspect ratio rounds
+    auto viewport_width = viewport_height * (double(image_width) / image_height); // Same idea as height * aspect ratio to get width but we are using actual fraction cus the aspect ratio rounds
 
     // Camera
     auto focal_length = 1.0;
